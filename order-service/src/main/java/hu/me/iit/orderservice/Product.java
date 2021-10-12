@@ -1,4 +1,4 @@
-package hu.me.iit.storageservice;
+package hu.me.iit.orderservice;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

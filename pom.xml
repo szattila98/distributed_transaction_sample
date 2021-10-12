@@ -11,5 +11,8 @@
 
     <modules>
         <module>eureka-server</module>
+        <module>order-service</module>
+        <module>customer-service</module>
+        <module>storage-service</module>
     </modules>
 </project>

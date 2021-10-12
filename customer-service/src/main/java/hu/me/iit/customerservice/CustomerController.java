@@ -16,7 +16,16 @@ public class CustomerController {
     }
 
     @PostMapping("/charge/customer/{customerId}/amount/{amount}")
-    public void charge(@PathVariable int customerId, @PathVariable double amount) {
+    public Customer charge(@PathVariable int customerId, @PathVariable double amount) {
+        if (customer.getCredits() < amount) {
+            throw new RuntimeException("Not enough credits!");
+        }
         customer.charge(amount);
+        return customer;
+    }
+
+    @GetMapping
+    public Customer customers() {
+        return customer;
     }
 }

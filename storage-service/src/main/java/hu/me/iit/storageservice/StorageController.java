@@ -16,9 +16,9 @@ public class StorageController {
 
     @PostConstruct
     public void init() {
-        products.add(new Product(1, "Thingy A"));
-        products.add(new Product(2, "Thingy B"));
-        products.add(new Product(3, "Thingy C"));
+        products.add(new Product(1, "Thingy A", 20));
+        products.add(new Product(2, "Thingy B", 1500));
+        products.add(new Product(3, "Thingy C", 2));
     }
 
     @GetMapping("/product/{productId}")
@@ -26,9 +26,16 @@ public class StorageController {
         return products.stream().filter(product -> product.getId() == productId).findAny().orElseThrow();
     }
 
+    @GetMapping
+    public List<Product> products() {
+        return products;
+    }
+
     @PostMapping("/deliver/{productId}")
-    public void deliver(@PathVariable int productId) {
-        products.remove(getProduct(productId));
+    public Product deliver(@PathVariable int productId) {
+        var product = getProduct(productId);
+        products.remove(product);
+        return product;
     }
 
 }

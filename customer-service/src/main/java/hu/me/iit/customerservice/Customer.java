@@ -11,6 +11,6 @@ public class Customer {
     private double credits;
 
     public void charge(double amount) {
-        this.credits += amount;
+        this.credits -= amount;
     }
 }
