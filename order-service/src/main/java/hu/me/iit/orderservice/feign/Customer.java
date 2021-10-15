@@ -1,12 +1,12 @@
-package hu.me.iit.orderservice;
+package hu.me.iit.orderservice.feign;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Product {
+public class Customer {
     private int id;
     private String name;
-    private double cost;
+    private double credits;
 }

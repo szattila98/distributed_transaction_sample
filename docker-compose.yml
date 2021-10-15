@@ -9,16 +9,16 @@ networks:
           gateway: 172.18.0.1
 
 services:
-  mysql-database:
-    image: mysql:5.7
-    container_name: mysql-database
-    command: mysqld --character-set-server=utf8mb4
-    environment:
-      MYSQL_ROOT_PASSWORD: 'password'
-    networks:
-      - microservice_transactions
-    ports:
-      - "3306:3306"
+#  mysql-database:
+#    image: mysql:5.7
+#    container_name: mysql-database
+#    command: mysqld --character-set-server=utf8mb4
+#    environment:
+#      MYSQL_ROOT_PASSWORD: password
+#    networks:
+#      - microservice_transactions
+#    ports:
+#      - "3306:3306"
 
   eureka-server:
     container_name: eureka-server
