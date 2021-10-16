@@ -1,10 +1,8 @@
 package hu.me.iit.storageservice;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -30,6 +28,11 @@ public class StorageController {
     @GetMapping
     public List<Product> products() {
         return repository.findAll();
+    }
+
+    @PostMapping("/save")
+    public Product saveProduct(@RequestBody Product product) {
+        return repository.save(product);
     }
 
     @PostMapping("/deliver/{productId}")
