@@ -17,4 +17,13 @@ public interface StorageClient {
 
     @PostMapping("/deliver/{productId}")
     Product deliver(@PathVariable int productId);
+
+    @PostMapping("/prepare/delivery/of/{productId}")
+    String prepareDelivery(@PathVariable int productId);
+
+    @PostMapping("/commit/delivery/of/{preparedProductUuid}")
+    void commitDelivery(@PathVariable String preparedProductUuid);
+
+    @PostMapping("/rollback/delivery/of/{preparedProductUuid}")
+    void rollbackDelivery(@PathVariable String preparedProductUuid);
 }

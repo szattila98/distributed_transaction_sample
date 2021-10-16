@@ -7,17 +7,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
 public class CustomerController {
 
     private final CustomerRepository repository;
+    private final Map<String, Integer> reservedProducts = new HashMap<>();
 
     @PostConstruct
     public void init() {
         repository.save(new Customer(1, "John Doe", 1000));
+    }
+
+    @GetMapping
+    public List<Customer> customers() {
+        return repository.findAll();
     }
 
     @GetMapping("/customer/{customerId}")
@@ -33,10 +41,5 @@ public class CustomerController {
         }
         customer.charge(amount);
         return repository.save(customer);
-    }
-
-    @GetMapping
-    public List<Customer> customers() {
-        return repository.findAll();
     }
 }
