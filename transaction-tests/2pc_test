@@ -1,0 +1,5 @@
+#!/bin/bash
+customerId=1
+productId=1
+curl -X 'POST' "http://localhost:8080/twoPhaseLock/order/for/$customerId/product/$productId" &
+curl -X 'POST' "http://localhost:8080/twoPhaseLock/order/for/$customerId/product/$productId" &

@@ -21,10 +21,16 @@ public class StorageController {
 
     @PostConstruct
     public void init() {
-        repository.save(new Product(1, "Affordable product A", 20));
-        repository.save(new Product(2, "Affordable product B", 30));
-        repository.save(new Product(3, "Not affordable product A", 1500));
-        repository.save(new Product(4, "Not affordable product B", 2000));
+        repository.save(new Product(0, "Affordable product 1", 20));
+        repository.save(new Product(0, "Affordable product 2", 30));
+        repository.save(new Product(0, "Affordable product 3", 40));
+        repository.save(new Product(0, "Affordable product 4", 50));
+        repository.save(new Product(0, "Affordable product 5", 60));
+        repository.save(new Product(0, "Not affordable product 1", 1500));
+        repository.save(new Product(0, "Not affordable product 2", 2000));
+        repository.save(new Product(0, "Not affordable product 3", 1500));
+        repository.save(new Product(0, "Not affordable product 4", 2000));
+        repository.save(new Product(0, "Not affordable product 5", 1500));
     }
 
     @GetMapping("/product/{productId}")
