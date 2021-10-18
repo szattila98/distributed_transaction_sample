@@ -55,6 +55,7 @@ public class StorageController {
         return product;
     }
 
+    // reserves the product, essentially locks it so others cannot modify it
     @PostMapping("/prepare/delivery/of/{productId}")
     public String prepareDelivery(@PathVariable int productId) {
         String uuid = UUID.randomUUID().toString();
@@ -68,6 +69,7 @@ public class StorageController {
         throw new NoSuchElementException("No product with this ID found!");
     }
 
+    // commits the delivery, so it makes the operation it was preparing for, and removes the product from the reservations
     @PostMapping("/commit/delivery/of/{preparedProductUuid}")
     public void commitDelivery(@PathVariable String preparedProductUuid) {
         if (reservedProducts.containsKey(preparedProductUuid)) {
@@ -79,6 +81,7 @@ public class StorageController {
         throw new NoSuchElementException("This product is not reserved, something has gone very wrong!");
     }
 
+    // rolls back reservation, it deletes it from the map
     @PostMapping("/rollback/delivery/of/{preparedProductUuid}")
     public void rollbackDelivery(@PathVariable String preparedProductUuid) {
         reservedProducts.remove(preparedProductUuid);

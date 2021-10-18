@@ -33,6 +33,7 @@ public class CustomerController {
         return repository.findById(customerId).orElseThrow();
     }
 
+    // error-prone code, if the amount is too big, it throws exception
     @PostMapping("/charge/customer/{customerId}/amount/{amount}")
     public Customer charge(@PathVariable int customerId, @PathVariable double amount) {
         var customer = repository.findById(customerId).orElseThrow();
