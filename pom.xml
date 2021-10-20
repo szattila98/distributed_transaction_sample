@@ -14,5 +14,6 @@
         <module>order-service</module>
         <module>customer-service</module>
         <module>storage-service</module>
+        <module>monolithic_transactions_sample_app</module>
     </modules>
 </project>

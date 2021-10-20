@@ -14,7 +14,12 @@ import javax.persistence.Id;
 public class Product {
     @Id
     @GeneratedValue
-    private int id;
+    private Integer id;
     private String name;
     private double cost;
+    private int inStock;
+
+    public void deliver() {
+        inStock = inStock - 1;
+    }
 }

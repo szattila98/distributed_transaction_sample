@@ -46,8 +46,8 @@ public class OrderController {
 
     // Re-save solution case
     // Fixes problem where product is delivered because it saves the previous state back when problem arises
-    // Introduces another problem, where if another transaction removes product after it queried it may save a product which was already delivered
-    // successfully
+    // Introduces another problem on deletion, where if another transaction removes product after it queried it may save a product which was already
+    // delivered successfully
     // Also id will not be the same, it will be incremented but this can be fixed with a generic generator
     @PostMapping("/saveOnError/order/for/{customerId}/product/{productId}")
     @Transactional

@@ -21,16 +21,11 @@ public class StorageController {
 
     @PostConstruct
     public void init() {
-        repository.save(new Product(0, "Affordable product 1", 20));
-        repository.save(new Product(0, "Affordable product 2", 30));
-        repository.save(new Product(0, "Affordable product 3", 40));
-        repository.save(new Product(0, "Affordable product 4", 50));
-        repository.save(new Product(0, "Affordable product 5", 60));
-        repository.save(new Product(0, "Not affordable product 1", 1500));
-        repository.save(new Product(0, "Not affordable product 2", 2000));
-        repository.save(new Product(0, "Not affordable product 3", 1500));
-        repository.save(new Product(0, "Not affordable product 4", 2000));
-        repository.save(new Product(0, "Not affordable product 5", 1500));
+        repository.save(new Product(null, "Affordable Product Many", 10, 50));
+        repository.save(new Product(null, "Affordable Product One", 10, 1));
+                repository.save(new Product(null, "Not Affordable Product A", 10000, 1));
+        repository.save(new Product(null, "Not Affordable Product B", 10000, 1));
+        repository.save(new Product(null, "Not Affordable Product C", 10000, 1));
     }
 
     @GetMapping("/product/{productId}")
@@ -51,17 +46,21 @@ public class StorageController {
     @PostMapping("/deliver/{productId}")
     public Product deliver(@PathVariable int productId) {
         var product = getProduct(productId);
-        repository.delete(product);
-        return product;
+        if (product.getInStock() <= 0) throw new NoSuchElementException("No product left in stock");
+        product.deliver();
+        return repository.save(product);
     }
 
     // reserves the product, essentially locks it so others cannot modify it
     @PostMapping("/prepare/delivery/of/{productId}")
     public String prepareDelivery(@PathVariable int productId) {
         String uuid = UUID.randomUUID().toString();
-        if (repository.existsById(productId)) {
-            if (reservedProducts.containsValue(productId)) {
-                throw new NoSuchElementException("This product is already reserved, as such it does not exists!");
+        var opt = repository.findById(productId);
+        if (opt.isPresent()) {
+            var product = opt.get();
+            long preparedProductIdCount = reservedProducts.values().stream().filter(x -> x == productId).count();
+            if (product.getInStock() <= 0 || product.getInStock() <= preparedProductIdCount) {
+                throw new NoSuchElementException("No products left in stock!");
             }
             reservedProducts.put(uuid, productId);
             return uuid;
@@ -74,7 +73,9 @@ public class StorageController {
     public void commitDelivery(@PathVariable String preparedProductUuid) {
         if (reservedProducts.containsKey(preparedProductUuid)) {
             int productId = reservedProducts.get(preparedProductUuid);
-            repository.deleteById(productId);
+            var product = repository.findById(productId).orElseThrow();
+            product.deliver();
+            repository.save(product);
             reservedProducts.remove(preparedProductUuid);
             return;
         }
