@@ -18,3 +18,4 @@ Code snippets are used in my thesis for the master's degree.
 - Order-service has endpoints for the transaction cases
 - After every service is up and running, it takes a while for the load-balancing to work, until that happens 500 errors are expected
 - Check container logs with `docker logs container-name`
+- There is also the monolithic sample app, which was created solely for code snippets, it is not part of the docker-compose network.
