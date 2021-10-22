@@ -60,7 +60,7 @@ public class OrderController {
             customerClient.charge(customerId, product.getCost()); // rollback happens here, but storage already delivered the product
         } catch (FeignException e) {
             storageClient.saveProduct(product);
-            return "Order could not be placed, not enough credits, product returned to storage!";
+            throw e;
         }
         var customer = customerClient.getCustomer(customerId);
         return "Order placed for " + customer + ", product " + product + " is in delivery!";
