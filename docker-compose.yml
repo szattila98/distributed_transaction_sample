@@ -1,13 +1,5 @@
 version: '2'
 
-networks:
-  microservice_transactions:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.18.0.22/16
-          gateway: 172.18.0.1
-
 services:
 #  mysql-database:
 #    image: mysql:5.7
@@ -26,8 +18,6 @@ services:
       context: ./eureka-server
       dockerfile: dockerfile
     image: eureka-server:latest
-    networks:
-      - microservice_transactions
     ports:
       - "8761:8761"
 
@@ -37,8 +27,6 @@ services:
       context: ./order-service
       dockerfile: dockerfile
     image: order-service:latest
-    networks:
-      - microservice_transactions
     ports:
       - "8080:8080"
     depends_on:
@@ -50,8 +38,6 @@ services:
       context: ./customer-service
       dockerfile: dockerfile
     image: customer-service:latest
-    networks:
-      - microservice_transactions
     ports:
       - "8081:8081"
     depends_on:
@@ -63,8 +49,6 @@ services:
       context: ./storage-service
       dockerfile: dockerfile
     image: storage-service:latest
-    networks:
-      - microservice_transactions
     ports:
       - "8082:8082"
     depends_on:
